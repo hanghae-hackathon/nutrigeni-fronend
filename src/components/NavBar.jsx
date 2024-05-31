@@ -104,6 +104,7 @@ export default function NavBar() {
       </LogoContainer>
       <SubContainer>
         <ItemContainer>
+          <a href="/calendar">지난 식단</a>
           <Link to="/">홈</Link>
           <Link to="/image_analysis">식단 기록하기</Link>
           <Link to="/profile">프로필</Link>
