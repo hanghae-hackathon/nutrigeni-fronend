@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { sendRegister } from "../api/sendRegister";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ export default function RegisterPage() {
     weight: "",
     hasDisease: false,
     diseaseName: "",
+    hasAllergy: false,
+    allergyName: "",
   });
 
   const handleChange = (e) => {
@@ -29,10 +32,16 @@ export default function RegisterPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit form data to the server
-    console.log(formData);
+    try {
+      const response = await sendRegister(formData);
+      console.log("User registered successfully:", response);
+      // 성공적으로 등록되었을 때의 추가 처리
+    } catch (error) {
+      console.error("Error registering user:", error);
+      // 오류 처리
+    }
   };
 
   return (
@@ -146,6 +155,42 @@ export default function RegisterPage() {
                 label="Disease Name"
                 name="diseaseName"
                 value={formData.diseaseName}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+          )}
+          <Grid item xs={12}>
+            <Stack direction="row" alignItems="center">
+              <Typography variant="body1" sx={{ mr: 2 }}>
+                Do you have any allergies?
+              </Typography>
+              <TextField
+                select
+                name="hasAllergy"
+                value={formData.hasAllergy ? "yes" : "no"}
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      name: "hasAllergy",
+                      value: e.target.value === "yes",
+                    },
+                  })
+                }
+                required
+              >
+                <MenuItem value="no">No</MenuItem>
+                <MenuItem value="yes">Yes</MenuItem>
+              </TextField>
+            </Stack>
+          </Grid>
+          {formData.hasAllergy && (
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Allergy Name"
+                name="allergyName"
+                value={formData.allergyName}
                 onChange={handleChange}
                 required
               />

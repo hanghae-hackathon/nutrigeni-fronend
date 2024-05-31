@@ -1,26 +1,38 @@
-import { Grid, Stack, Typography } from "@mui/material";
-import LoginForm from "../components/login/LoginForm";
-import LoginFooter from "../components/login/LoginFooter";
+import React, { useState } from "react";
+import { Button, TextField, Stack, Typography } from "@mui/material";
+import { useLogin } from "../hooks/useLogin"; // useLogin 훅을 import
 
-export default function LoginPage() {
+export default function LoginForm() {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(id, password); // 로그인 함수 호출
+  };
+
   return (
-    <Grid container>
-      <Grid item xs={12} display={"flex"} justifyContent={"center"}>
-        <Grid item xs={8}>
-          <Stack direction="row" justifyContent="space-between" alignItems="baseline">
-            <Typography variant="h4">Login</Typography>
-            <Typography to="/register" variant="body1" sx={{ textDecoration: "none" }} color="primary">
-              Don&apos;t have an account?
-            </Typography>
-          </Stack>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <LoginForm/>
-      </Grid>
-      <Grid item xs={12}>
-        <LoginFooter/>
-      </Grid>
-    </Grid>
+    <form onSubmit={handleSubmit}>
+      <Stack spacing={2}>
+        <TextField
+          label="ID"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          required
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        {error && <Typography color="error">{error}</Typography>}
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+      </Stack>
+    </form>
   );
 }

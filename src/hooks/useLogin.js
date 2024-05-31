@@ -21,19 +21,19 @@ export function useLogin() {
 
       // 액세스 토큰 만료 시간 1분 전 다시 갱신
       setInterval(async () => {
-        const token = await silentRefresh(data.refreshToken);
+        const token = await silentRefresh(email, data.refreshToken);
         setAccessToken(token);
-      }, process.env.REACT_JWT_EXPIRY_TIME - 60000);
+      }, 60000);
 
       setAccessToken(data.accessToken);
       setRefreshToken("refreshToken", data.refreshToken);
       navigate("/");
 
-      const userData = await getUser(data.accessToken);
-      setUserInfo(userData);
+      // const userData = await getUser(data.accessToken);
+      setUserInfo(email);
     } catch (error) {
-      setError(t("Please check your ID and password"));
-      alert(t("Please check your ID and password"));
+      setError("Please check your ID and password");
+      alert("Please check your ID and password");
     }
   };
 

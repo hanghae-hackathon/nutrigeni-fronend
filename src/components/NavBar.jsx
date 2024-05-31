@@ -1,6 +1,9 @@
 import { Button } from "antd";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accessTokenAtom, userInfoAtom } from "../atom/loginAtom";
+import { logoutAPI } from "../api/loginAPI";
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -50,8 +53,24 @@ const ButtonContainer = styled.div`
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
+
   const handleClickLogin = () => {
-    navigate("/login");
+    if (accessToken) {
+      handleClickLogout();
+    } else {
+      // 로그인 로직
+      setAccessToken(accessToken);
+      console.log("로그인 되었습니다.");
+    }
+  };
+
+  const handleClickLogout = () => {
+    // 로그아웃 로직
+    setAccessToken(null);
+    logoutAPI(userInfo);
+    console.log("로그아웃 되었습니다.");
   };
 
   const handleClickRegister = () => {
@@ -65,13 +84,13 @@ export default function NavBar() {
       </LogoContainer>
       <SubContainer>
         <ItemContainer>
-          <a href="/">홈</a>
-          <a href="/image_analysis">식단 기록하기</a>
-          <a href="/profile">프로필</a>
+          <Link to="/">홈</Link>
+          <Link to="/image_analysis">식단 기록하기</Link>
+          <Link to="/profile">프로필</Link>
         </ItemContainer>
         <ButtonContainer>
-          <Button type={"primary"} onClick={handleClickLogin}>
-            로그인
+          <Button type="primary" onClick={handleClickLogin}>
+            {accessToken ? "로그아웃" : "로그인"}
           </Button>
           <Button type={"default"} onClick={handleClickRegister}>
             가입하기

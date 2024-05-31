@@ -7,10 +7,10 @@ import GlobalStyle from "./styles/GlobalStyle";
 import routes from "./routes";
 import DefaultTheme from "./styles/defaultTheme";
 
-
 const router = createBrowserRouter(routes);
 
 function App() {
+
   return (
     <ThemeProvider theme={DefaultTheme}>
       <Reset/>
