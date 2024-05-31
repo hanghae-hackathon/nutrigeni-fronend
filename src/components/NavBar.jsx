@@ -113,9 +113,11 @@ export default function NavBar() {
           <Button type="primary" onClick={handleClickLogin}>
             {accessToken ? "로그아웃" : "로그인"}
           </Button>
-          <Button type={"default"} onClick={handleClickRegister}>
-            가입하기
-          </Button>
+          {!accessToken && (
+            <Button type="default" onClick={handleClickRegister}>
+          가입하기
+            </Button>
+          )}
         </ButtonContainer>
       </SubContainer>
     </Nav>
