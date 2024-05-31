@@ -11,11 +11,6 @@ const routes = [
   {
     element: <Layout />,
     children: [
-      { path: "/image_analysis", element: <PrivateRoute component={<FoodAnalysisPage />} /> },
-      { path: "/profile", element: <PrivateRoute component={<ProfilePage />} /> },
-      { path: "/calendar", element: <PrivateRoute component={<CalendarPage />} /> },
-      { path: "/", element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
       {
         path: "/image_analysis",
         element: (
@@ -33,12 +28,24 @@ const routes = [
         ),
       },
       {
-        path: "/register",
+        path: "/calendar",
         element: (
           <PrivateRoute>
-            <RegisterPage />
+            <CalendarPage />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
       },
     ],
   },

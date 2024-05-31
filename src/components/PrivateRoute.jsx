@@ -4,20 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { accessTokenAtom } from "../atom/loginAtom";
 
-export default function PrivateRoute({ element: Component }) {
+export default function PrivateRoute({ children }) {
   const accessToken = useRecoilValue(accessTokenAtom);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(accessToken);
     if (!accessToken) {
       navigate("/login");
     }
   }, [accessToken, navigate]);
 
-  return accessToken ? Component : null;
+  return accessToken ? children : null;
 }
 
 PrivateRoute.propTypes = {
-  element: PropTypes.elementType.isRequired,
+  children: PropTypes.node.isRequired,
 };
