@@ -1,9 +1,11 @@
+import React, { useEffect } from "react";
 import { Button } from "antd";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { useCookies } from "react-cookie";
 import { accessTokenAtom, userInfoAtom } from "../atom/loginAtom";
-import { logoutAPI } from "../api/loginAPI";
+import { logoutAPI, silentRefresh } from "../api/loginAPI";
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -53,22 +55,39 @@ const ButtonContainer = styled.div`
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
   const userInfo = useRecoilValue(userInfoAtom);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 리프레시 토큰 요청
+    const fetchAccessToken = async () => {
+      try {
+        const newAccessToken = await silentRefresh(userInfo, cookies.refreshToken);
+        setAccessToken(newAccessToken);
+      } catch (error) {
+        console.error("Failed to refresh token", error);
+      }
+    };
+
+    if (!accessToken && cookies.refreshToken) {
+      fetchAccessToken();
+    }
+  }, [accessToken, cookies.refreshToken, setAccessToken]);
 
   const handleClickLogin = () => {
     if (accessToken) {
       handleClickLogout();
     } else {
       // 로그인 로직
-      setAccessToken(accessToken);
-      console.log("로그인 되었습니다.");
+      navigate("/login");
     }
   };
 
   const handleClickLogout = () => {
     // 로그아웃 로직
     setAccessToken(null);
+    removeCookie("refreshToken");
     logoutAPI(userInfo);
     console.log("로그아웃 되었습니다.");
   };
