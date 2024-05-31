@@ -63,7 +63,7 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>1.</Box>
                 <Typography variant="h5" align="center">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus, delectus!
+                  사진을 통해 음식의 칼로리와 영양성분을 알 수 있습니다.
                 </Typography>
               </Box>
             </Grid>
@@ -71,7 +71,7 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>2.</Box>
                 <Typography variant="h5" align="center">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus, delectus!
+                  개인의 키, 몸무게와 같은 정보를 입력하고 적당한 식사인지 확인할 수 있습니다.
                 </Typography>
               </Box>
             </Grid>
@@ -79,8 +79,7 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>3.</Box>
                 <Typography variant="h5" align="center">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus, delectus!
-
+                  식사를 통해 추후에 나의 몸에 어떤 영향을 줄지 알 수 있고, 더 건강한 방향으로 가기 위한 대책을 마련해 줍니다.
                 </Typography>
               </Box>
             </Grid>

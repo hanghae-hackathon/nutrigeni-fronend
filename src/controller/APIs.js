@@ -13,8 +13,23 @@ const defaultForm = async () => {
   }
 };
 
+const imageSend = async (image) => {
+  try {
+    const res = await axiosConfig({
+      url: "/api/",
+      method: "get",
+      body: image,
+    });
+
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
+
 const APIs = {
   defaultForm,
+  imageSend,
 };
 
 export default APIs;
