@@ -16,9 +16,11 @@ const defaultForm = async () => {
 const imageSend = async (image) => {
   try {
     const res = await axiosConfig({
-      url: "/api/",
-      method: "get",
-      body: image,
+      url: "api/image-upload",
+      method: "post",
+      body: {
+        file: image,
+      },
     });
 
     return res;

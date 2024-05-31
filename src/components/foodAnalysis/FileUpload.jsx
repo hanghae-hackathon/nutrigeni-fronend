@@ -27,7 +27,7 @@ export default function FileUpload() {
       console.log(res)
     }
 
-    getImageInfo
+    getImageInfo()
   }, [imagePreview])
 
   const handleImageClick = () => {

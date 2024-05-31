@@ -2,9 +2,9 @@ import axios from "axios";
 
 
 
-let url = "http://192.168.0.193";
+let url = "http://192.168.0.193:8081";
 if (process.env.REACT_APP_ENV === "development") {
-  url = "http://localhost:8081";
+  url = "http://192.168.0.193:8081";
 } else {
   url = "";
 
