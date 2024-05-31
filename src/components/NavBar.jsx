@@ -16,7 +16,7 @@ const Nav = styled.nav`
 
 const LogoContainer = styled.div`
   width: 150px;
-  a{
+  a {
     display: inline-block;
     font-size: 20px;
     padding: 19px 20px;
@@ -25,15 +25,15 @@ const LogoContainer = styled.div`
 
 const SubContainer = styled.div`
   width: 100%;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
-  a{
+  a {
     font-weight: 500;
     margin-right: 20px;
   }
@@ -43,7 +43,7 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
 
-  button{
+  button {
     margin-right: 20px;
   }
 `;
@@ -52,6 +52,10 @@ export default function NavBar() {
   const navigate = useNavigate();
   const handleClickLogin = () => {
     navigate("/login");
+  };
+
+  const handleClickRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -66,8 +70,12 @@ export default function NavBar() {
           <a href="/profile">프로필</a>
         </ItemContainer>
         <ButtonContainer>
-          <Button type={"primary"} onClick={handleClickLogin}>로그인</Button>
-          <Button type={"default"}>가입하기</Button>
+          <Button type={"primary"} onClick={handleClickLogin}>
+            로그인
+          </Button>
+          <Button type={"default"} onClick={handleClickRegister}>
+            가입하기
+          </Button>
         </ButtonContainer>
       </SubContainer>
     </Nav>

@@ -1,4 +1,3 @@
-
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
 import FoodAnalysisPage from "./pages/FoodAnalysisPage";
@@ -6,7 +5,7 @@ import FoodAnalysisPage from "./pages/FoodAnalysisPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
-
+import RegisterPage from "./pages/RegisterPage";
 
 const routes = [
   {
@@ -15,8 +14,18 @@ const routes = [
     children: [
       { path: "/", element: <PrivateRoute component={<HomePage />} /> },
       { path: "/login", element: <PrivateRoute component={<LoginPage />} /> },
-      { path: "/image_analysis", element: <PrivateRoute component={<FoodAnalysisPage />} /> },
-      { path: "/profile", element: <PrivateRoute component={<ProfilePage />} /> },
+      {
+        path: "/image_analysis",
+        element: <PrivateRoute component={<FoodAnalysisPage />} />,
+      },
+      {
+        path: "/profile",
+        element: <PrivateRoute component={<ProfilePage />} />,
+      },
+      {
+        path: "/register",
+        element: <PrivateRoute component={<RegisterPage />} />,
+      },
     ],
   },
 ];

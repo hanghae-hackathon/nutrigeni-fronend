@@ -13,22 +13,17 @@ const axiosConfig = axios.create({
 });
 
 axiosConfig.interceptors.request.use(
-  config => {
+  (config) => {
     config.withCredentials = true;
     return config;
   },
-  error => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 // 응답 인터셉터 추가
 axiosConfig.interceptors.response.use(
-
-  async response =>
-    response
-  ,
-
-  async error =>
-    Promise.reject(error),
+  async (response) => response,
+  async (error) => Promise.reject(error)
 );
 
 export default axiosConfig;

@@ -5,15 +5,25 @@ import ResultTable from "../components/foodAnalysis/ResultTable";
 export default function FoodAnalysisPage() {
   return (
     <Grid container>
-      <Grid item xs={12} display={"flex"} justifyContent={"center"} style={{ borderBottom: "2px solid #cfcfcf", paddingBottom: "20px" }}>
+      <Grid
+        item
+        xs={12}
+        display={"flex"}
+        justifyContent={"center"}
+        style={{ borderBottom: "2px solid #cfcfcf", paddingBottom: "20px" }}
+      >
         <Grid item xs={8}>
-          <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="baseline"
+          >
             <Typography variant="h6">식단 기록하기</Typography>
           </Stack>
         </Grid>
       </Grid>
-      <FileUpload/>
-      <ResultTable/>
+      <FileUpload />
+      <ResultTable />
     </Grid>
   );
 }
