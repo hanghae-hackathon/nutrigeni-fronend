@@ -1,10 +1,13 @@
 import axios from "axios";
 
-let url = "http://localhost:8081";
+
+
+let url = "http://192.168.0.193";
 if (process.env.REACT_APP_ENV === "development") {
   url = "http://localhost:8081";
 } else {
   url = "";
+
 }
 
 const axiosConfig = axios.create({

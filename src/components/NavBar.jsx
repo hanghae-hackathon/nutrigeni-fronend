@@ -63,6 +63,7 @@ export default function NavBar() {
         <ItemContainer>
           <a href="/">홈</a>
           <a href="/image_analysis">식단 기록하기</a>
+          {/* <a href="/calendar">달력</a> */}
           <a href="/profile">프로필</a>
         </ItemContainer>
         <ButtonContainer>

@@ -4,7 +4,7 @@ import ResultTable from "../components/foodAnalysis/ResultTable";
 
 export default function FoodAnalysisPage() {
   return (
-    <Grid container>
+    <Grid item>
       <Grid item xs={12} display={"flex"} justifyContent={"center"} style={{ borderBottom: "2px solid #cfcfcf", paddingBottom: "20px" }}>
         <Grid item xs={8}>
           <Stack direction="row" justifyContent="space-between" alignItems="baseline">

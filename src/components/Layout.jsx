@@ -23,6 +23,7 @@ const ColMain = styled(Col)`
   margin-bottom: 20px;
   border-radius: 10px;
   background-color: #ffffff;
+  overflow: hidden;
 `;
 
 const Background = styled.div`
