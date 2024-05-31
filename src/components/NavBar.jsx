@@ -1,6 +1,11 @@
+import React, { useEffect } from "react";
 import { Button } from "antd";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useCookies } from "react-cookie";
+import { accessTokenAtom, userInfoAtom } from "../atom/loginAtom";
+import { logoutAPI, silentRefresh } from "../api/loginAPI";
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -16,7 +21,7 @@ const Nav = styled.nav`
 
 const LogoContainer = styled.div`
   width: 150px;
-  a{
+  a {
     display: inline-block;
     font-size: 20px;
     padding: 19px 20px;
@@ -25,15 +30,15 @@ const LogoContainer = styled.div`
 
 const SubContainer = styled.div`
   width: 100%;
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
-  a{
+  a {
     font-weight: 500;
     margin-right: 20px;
   }
@@ -43,15 +48,53 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
 
-  button{
+  button {
     margin-right: 20px;
   }
 `;
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
+  const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 리프레시 토큰 요청
+    const fetchAccessToken = async () => {
+      try {
+        const newAccessToken = await silentRefresh(userInfo, cookies.refreshToken);
+        setAccessToken(newAccessToken);
+      } catch (error) {
+        console.error("Failed to refresh token", error);
+      }
+    };
+
+    if (!accessToken && cookies.refreshToken) {
+      fetchAccessToken();
+    }
+  }, [accessToken, cookies.refreshToken, setAccessToken]);
+
   const handleClickLogin = () => {
-    navigate("/login");
+    if (accessToken) {
+      handleClickLogout();
+    } else {
+      // 로그인 로직
+      navigate("/login");
+    }
+  };
+
+  const handleClickLogout = () => {
+    // 로그아웃 로직
+    setAccessToken(null);
+    setUserInfo(null);
+    removeCookie("refreshToken");
+    logoutAPI(userInfo);
+    console.log("로그아웃 되었습니다.");
+  };
+
+  const handleClickRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -61,14 +104,18 @@ export default function NavBar() {
       </LogoContainer>
       <SubContainer>
         <ItemContainer>
-          <a href="/">홈</a>
-          <a href="/image_analysis">식단 기록하기</a>
           <a href="/calendar">지난 식단</a>
-          <a href="/profile">프로필</a>
+          <Link to="/">홈</Link>
+          <Link to="/image_analysis">식단 기록하기</Link>
+          <Link to="/profile">프로필</Link>
         </ItemContainer>
         <ButtonContainer>
-          <Button type={"primary"} onClick={handleClickLogin}>로그인</Button>
-          <Button type={"default"}>가입하기</Button>
+          <Button type="primary" onClick={handleClickLogin}>
+            {accessToken ? "로그아웃" : "로그인"}
+          </Button>
+          <Button type={"default"} onClick={handleClickRegister}>
+            가입하기
+          </Button>
         </ButtonContainer>
       </SubContainer>
     </Nav>

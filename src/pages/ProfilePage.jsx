@@ -72,15 +72,6 @@ export default function ProfilePage() {
               </Typography>
             </Grid>
           </Grid>
-          {/* <Grid container alignItems={"center"} display={"flex"} justifyContent={"center"}>
-            <Typography variant="caption" color="text.secondary">
-            You made an extra{" "}
-              <Typography variant="caption" sx={{ color: `${color || "primary"}.main` }}>
-                {extra}
-              </Typography>{" "}
-            this year
-            </Typography>
-          </Grid> */}
         </Stack>
       </Grid>
     </div>
