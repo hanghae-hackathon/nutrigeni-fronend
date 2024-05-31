@@ -55,7 +55,7 @@ const ButtonContainer = styled.div`
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const userInfo = useRecoilValue(userInfoAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
   const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
 
@@ -87,6 +87,7 @@ export default function NavBar() {
   const handleClickLogout = () => {
     // 로그아웃 로직
     setAccessToken(null);
+    setUserInfo(null);
     removeCookie("refreshToken");
     logoutAPI(userInfo);
     console.log("로그아웃 되었습니다.");
