@@ -13,14 +13,16 @@ const defaultForm = async () => {
   }
 };
 
-const imageSend = async (image) => {
+const imageSend = async (file) => {
   try {
+    console.log(image)
     const res = await axiosConfig({
       url: "api/image-upload",
       method: "post",
-      body: {
-        file: image,
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
+      body: file,
     });
 
     return res;
