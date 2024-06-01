@@ -28,7 +28,7 @@ export const logoutAPI = async (email) => {
 };
 
 export const silentRefresh = async (email, currentRefreshToken) => {
-  try {
+  /* try {
     const response = await axiosConfig.post("/auth/token/reissuance", {
       email,
       currentRefreshToken,
@@ -38,5 +38,5 @@ export const silentRefresh = async (email, currentRefreshToken) => {
   } catch (error) {
     console.error("Error refreshing JWT:", error);
     throw error;
-  }
+  } */
 };

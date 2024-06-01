@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { sendRegister } from "../api/sendRegister";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -29,15 +30,19 @@ export default function RegisterPage() {
       [name]: value,
     });
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await sendRegister(formData);
       console.log("User registered successfully:", response);
+      navigate("/");
+
       // 성공적으로 등록되었을 때의 추가 처리
     } catch (error) {
       console.error("Error registering user:", error);
+      navigate("/");
       // 오류 처리
     }
   };
