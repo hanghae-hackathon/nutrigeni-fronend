@@ -133,7 +133,22 @@ export default function ResultTable({ imageResult }) {
       >
         <DialogTitle id="alert-dialog-title">{"DETAIL"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            component="div"
+            style={{
+              width: "100%",
+              minHeight: "100px",
+              padding: "10px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              overflow: "auto",
+              whiteSpace: "pre-wrap",
+              fontFamily: "inherit",
+              fontSize: "inherit",
+              color: "#222",
+            }}
+          >
             {responseData ? responseData : "Loading..."}
           </DialogContentText>
         </DialogContent>
