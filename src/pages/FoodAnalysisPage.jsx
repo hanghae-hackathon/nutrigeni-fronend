@@ -29,7 +29,7 @@ export default function FoodAnalysisPage() {
       </Grid>
       <FileUpload loading={loading} setLoading={setLoading} setImageResult={setImageResult} />
       <ResultTable imageResult={imageResult} />
-      <FoodEvaluation/>
+      {/* <FoodEvaluation/> */}
     </Grid>
   );
 }
