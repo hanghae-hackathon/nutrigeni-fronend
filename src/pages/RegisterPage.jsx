@@ -12,23 +12,21 @@ import { sendRegister } from "../api/sendRegister";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
+    userName: "",
     password: "",
-    healthGoal: "",
-    gender: "",
-    height: "",
-    weight: "",
-    hasDisease: false,
-    diseaseName: "",
-    hasAllergy: false,
-    allergyName: "",
+    role: "",
+    authorityLevel: 0,
+    height: 0,
+    weight: 0,
+    medicalConditions: "",
   });
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     });
   };
 
@@ -54,9 +52,19 @@ export default function RegisterPage() {
           <Grid item xs={12}>
             <TextField
               fullWidth
+              label="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
               label="Username"
-              name="username"
-              value={formData.username}
+              name="userName"
+              value={formData.userName}
               onChange={handleChange}
               required
             />
@@ -76,31 +84,26 @@ export default function RegisterPage() {
             <TextField
               fullWidth
               select
-              label="Health Goal"
-              name="healthGoal"
-              value={formData.healthGoal}
+              label="Role"
+              name="role"
+              value={formData.role}
               onChange={handleChange}
               required
             >
-              <MenuItem value="weight_loss">Weight Loss</MenuItem>
-              <MenuItem value="muscle_gain">Muscle Gain</MenuItem>
-              <MenuItem value="maintain">Maintain</MenuItem>
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
-              select
-              label="Gender"
-              name="gender"
-              value={formData.gender}
+              label="Authority Level"
+              name="authorityLevel"
+              type="number"
+              value={formData.authorityLevel}
               onChange={handleChange}
               required
-            >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
-            </TextField>
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -125,77 +128,15 @@ export default function RegisterPage() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Stack direction="row" alignItems="center">
-              <Typography variant="body1" sx={{ mr: 2 }}>
-                Do you have any disease?
-              </Typography>
-              <TextField
-                select
-                name="hasDisease"
-                value={formData.hasDisease ? "yes" : "no"}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      name: "hasDisease",
-                      value: e.target.value === "yes",
-                    },
-                  })
-                }
-                required
-              >
-                <MenuItem value="no">No</MenuItem>
-                <MenuItem value="yes">Yes</MenuItem>
-              </TextField>
-            </Stack>
+            <TextField
+              fullWidth
+              label="Medical Conditions"
+              name="medicalConditions"
+              value={formData.medicalConditions}
+              placeholder="e.g., Diabetes, Hypertension"
+              onChange={handleChange}
+            />
           </Grid>
-          {formData.hasDisease && (
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Disease Name"
-                name="diseaseName"
-                value={formData.diseaseName}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-          )}
-          <Grid item xs={12}>
-            <Stack direction="row" alignItems="center">
-              <Typography variant="body1" sx={{ mr: 2 }}>
-                Do you have any allergies?
-              </Typography>
-              <TextField
-                select
-                name="hasAllergy"
-                value={formData.hasAllergy ? "yes" : "no"}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      name: "hasAllergy",
-                      value: e.target.value === "yes",
-                    },
-                  })
-                }
-                required
-              >
-                <MenuItem value="no">No</MenuItem>
-                <MenuItem value="yes">Yes</MenuItem>
-              </TextField>
-            </Stack>
-          </Grid>
-          {formData.hasAllergy && (
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Allergy Name"
-                name="allergyName"
-                value={formData.allergyName}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-          )}
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Register
