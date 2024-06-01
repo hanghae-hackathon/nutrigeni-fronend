@@ -18,13 +18,14 @@ import {
   DialogTitle,
   CircularProgress,
   Backdrop,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { userInfoAtom } from "../../atom/loginAtom";
 
 export default function ResultTable({ imageResult }) {
-  // Check if imageResult and imageResult.재료 exist
   if (!imageResult || !imageResult.재료) {
     return <div></div>;
   }
@@ -33,6 +34,7 @@ export default function ResultTable({ imageResult }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [responseData, setResponseData] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleClickDetail = async () => {
     setLoading(true);
@@ -46,9 +48,9 @@ export default function ResultTable({ imageResult }) {
       });
       setResponseData(response.data);
       console.log("Response received:", response.data);
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Error sending GET request:", error);
-      // Handle error if needed
     } finally {
       setLoading(false);
     }
@@ -59,6 +61,13 @@ export default function ResultTable({ imageResult }) {
     setResponseData(null);
   };
 
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -67,14 +76,14 @@ export default function ResultTable({ imageResult }) {
           variant="contained"
           type="button"
           sx={{
-            backgroundColor: "#008080", // Teal color
-            color: "#fff", // White text color
-            padding: "10px 20px", // Padding
-            fontSize: "16px", // Font size
-            borderRadius: "8px", // Border radius
-            boxShadow: "0 3px 5px 2px rgba(0, 128, 128, .3)", // Shadow effect
+            backgroundColor: "#008080",
+            color: "#fff",
+            padding: "10px 20px",
+            fontSize: "16px",
+            borderRadius: "8px",
+            boxShadow: "0 3px 5px 2px rgba(0, 128, 128, .3)",
             "&:hover": {
-              backgroundColor: "#006666", // Darker teal shade on hover
+              backgroundColor: "#006666",
             },
           }}
           onClick={handleClickDetail}
@@ -117,7 +126,7 @@ export default function ResultTable({ imageResult }) {
       </Grid>
 
       <Dialog
-        open={open}
+        open={open && !loading}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -141,6 +150,12 @@ export default function ResultTable({ imageResult }) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+          Detail data fetched successfully!
+        </Alert>
+      </Snackbar>
     </>
   );
 }

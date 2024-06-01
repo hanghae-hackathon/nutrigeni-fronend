@@ -1,4 +1,4 @@
-import { Button, Grid, LinearProgress, Box, CircularProgress } from "@mui/material";
+import { Button, Grid, LinearProgress, Box, CircularProgress, Snackbar, Alert } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import uploadImage from "../../images/upload.png";
 import axios from "axios";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 export default function FileUpload(props) {
   const { setLoading, loading, setImageResult } = props;
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleFileUpload = async (event) => {
@@ -26,6 +27,7 @@ export default function FileUpload(props) {
         });
         setLoading(false);
         setImageResult(response.data); // Make sure to use response.data to access the actual data
+        setSnackbarOpen(true); // Show the Snackbar on success
       } catch (error) {
         setLoading(false);
       }
@@ -34,6 +36,10 @@ export default function FileUpload(props) {
 
   const handleImageClick = () => {
     fileInputRef.current.click();
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -85,6 +91,16 @@ export default function FileUpload(props) {
           />
         </Button>
       </Grid>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+          Image uploaded successfully!
+        </Alert>
+      </Snackbar>
     </>
   );
 }
