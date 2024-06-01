@@ -6,8 +6,8 @@ import Typography from "./Typography";
 export default function ProductHero() {
   return (
     <>
-      <Typography color="inherit" align="center" variant="h2" marked="center">
-        제목
+      <Typography color="inherit" align="center" variant="h3" marked="center">
+        NutriGenie
       </Typography>
       <Typography
         color="inherit"

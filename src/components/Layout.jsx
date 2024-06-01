@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const ColMain = styled(Col)`
-  padding: 30px 15px 0px 15px;
+  padding: 30px 15px 10px 15px;
   min-height: 100vh;
   min-width: 500px;
   border-right: 1px solid #e9e9e9;

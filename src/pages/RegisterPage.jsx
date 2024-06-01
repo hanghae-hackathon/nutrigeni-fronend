@@ -20,8 +20,6 @@ export default function RegisterPage() {
     email: "",
     userName: "",
     password: "",
-    role: "",
-    authorityLevel: 0,
     height: 0,
     weight: 0,
     medicalConditions: "",
@@ -44,10 +42,15 @@ export default function RegisterPage() {
       console.log("User registered successfully:", response);
       navigate("/");
     } catch (error) {
-      console.error("Error registering user:", error);
-      // handle error
+      if (error.response && error.response.status === 403) {
+        alert("이미 가입된 회원입니다.");
+      } else {
+        console.error("Error registering user:", error);
+        // handle other errors
+      }
     }
   };
+
 
   return (
     <Container maxWidth="sm">
@@ -85,31 +88,6 @@ export default function RegisterPage() {
                   name="password"
                   type="password"
                   value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  select
-                  label="Role"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-                >
-                  <MenuItem value="user">User</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Authority Level"
-                  name="authorityLevel"
-                  type="number"
-                  value={formData.authorityLevel}
                   onChange={handleChange}
                   required
                 />
