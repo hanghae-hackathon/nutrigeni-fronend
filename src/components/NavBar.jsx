@@ -108,9 +108,9 @@ export default function NavBar() {
   return (
     <Nav>
       <LogoContainer>
-        <a href="">
+        <Link to="/">
           <img src={Logo} alt="Logo" style={{ width: "60px" }} />
-        </a>
+        </Link>
       </LogoContainer>
       <SubContainer>
         <ItemContainer>
