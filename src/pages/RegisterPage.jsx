@@ -7,6 +7,10 @@ import {
   Stack,
   TextField,
   Typography,
+  Container,
+  Card,
+  CardContent,
+  CardActions,
 } from "@mui/material";
 import { sendRegister } from "../api/sendRegister";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +27,8 @@ export default function RegisterPage() {
     medicalConditions: "",
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -30,7 +36,6 @@ export default function RegisterPage() {
       [name]: value,
     });
   };
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,117 +43,124 @@ export default function RegisterPage() {
       const response = await sendRegister(formData);
       console.log("User registered successfully:", response);
       navigate("/");
-
-      // 성공적으로 등록되었을 때의 추가 처리
     } catch (error) {
       console.error("Error registering user:", error);
-      navigate("/");
-      // 오류 처리
+      // handle error
     }
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Register
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Username"
-              name="userName"
-              value={formData.userName}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              select
-              label="Role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <MenuItem value="user">User</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Authority Level"
-              name="authorityLevel"
-              type="number"
-              value={formData.authorityLevel}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Height (cm)"
-              name="height"
-              type="number"
-              value={formData.height}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Weight (kg)"
-              name="weight"
-              type="number"
-              value={formData.weight}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Medical Conditions"
-              name="medicalConditions"
-              value={formData.medicalConditions}
-              placeholder="e.g., Diabetes, Hypertension"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Register
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Box>
+    <Container maxWidth="sm">
+      <Card variant="outlined" sx={{ mt: 8, boxShadow: 3 }}>
+        <CardContent>
+          <Typography variant="h4" gutterBottom>
+            Register
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Username"
+                  name="userName"
+                  value={formData.userName}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  select
+                  label="Role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  required
+                >
+                  <MenuItem value="user">User</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Authority Level"
+                  name="authorityLevel"
+                  type="number"
+                  value={formData.authorityLevel}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Height (cm)"
+                  name="height"
+                  type="number"
+                  value={formData.height}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Weight (kg)"
+                  name="weight"
+                  type="number"
+                  value={formData.weight}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Medical Conditions"
+                  name="medicalConditions"
+                  value={formData.medicalConditions}
+                  placeholder="e.g., Diabetes, Hypertension"
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+        <CardActions>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleSubmit}
+          >
+            Register
+          </Button>
+        </CardActions>
+      </Card>
+    </Container>
   );
 }
