@@ -1,4 +1,4 @@
-import { Button, Grid, LinearProgress, Box } from "@mui/material";
+import { Button, Grid, LinearProgress, Box, CircularProgress } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import uploadImage from "../../images/upload.png";
 import axios from "axios";
@@ -39,8 +39,21 @@ export default function FileUpload(props) {
   return (
     <>
       {loading && (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress />
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
         </Box>
       )}
       {uploadedFile ? (
