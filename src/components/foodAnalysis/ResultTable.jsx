@@ -1,21 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { userInfoAtom } from "../../atom/loginAtom";
+import {
+  Button,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  CircularProgress,
+  Backdrop,
+} from "@mui/material";
 import { useRecoilValue } from "recoil";
+import axios from "axios";
+import { userInfoAtom } from "../../atom/loginAtom";
 
 export default function ResultTable({ imageResult }) {
   // Check if imageResult and imageResult.재료 exist
   if (!imageResult || !imageResult.재료) {
     return <div></div>;
   }
+
   const userInfo = useRecoilValue(userInfoAtom);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [responseData, setResponseData] = useState(null);
+
+  const handleClickDetail = async () => {
+    setLoading(true);
+    setOpen(true);
+    try {
+      const response = await axios.get("http://192.168.0.193:8081/api/food/check-health-food-conflicts", {
+        params: {
+          email: userInfo,
+          foodName: imageResult.음식이름,
+        },
+      });
+      setResponseData(response.data);
+      console.log("Response received:", response.data);
+    } catch (error) {
+      console.error("Error sending GET request:", error);
+      // Handle error if needed
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setResponseData(null);
+  };
 
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h2 style={{ fontSize: "24px", padding: "10px 10px 0 10px", fontWeight: "bold", textDecoration: "underline", textUnderlinePosition: "under" }}>{imageResult?.음식이름}</h2>
-        {/* <div>아이디 | {userInfo}</div> */}
+        <Typography variant="h2" style={{ fontSize: "24px", padding: "10px 10px 0 10px", fontWeight: "bold", textDecoration: "underline", textUnderlinePosition: "under" }}>{imageResult?.음식이름}</Typography>
         <Button
           variant="contained"
           type="button"
@@ -30,8 +77,9 @@ export default function ResultTable({ imageResult }) {
               backgroundColor: "#006666", // Darker teal shade on hover
             },
           }}
+          onClick={handleClickDetail}
         >
-      DETAIL
+          DETAIL
         </Button>
       </div>
       <Grid item xs={12} display={"flex"} justifyContent={"center"} style={{ marginTop: "20px" }}>
@@ -67,6 +115,32 @@ export default function ResultTable({ imageResult }) {
           </Table>
         </TableContainer>
       </Grid>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"DETAIL"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {responseData ? responseData : "Loading..."}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
