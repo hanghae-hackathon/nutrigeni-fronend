@@ -1,50 +1,65 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function ResultTable({ imageResult }) {
+  // Check if imageResult and imageResult.재료 exist
+  if (!imageResult || !imageResult.재료) {
+    return <div>No data available</div>;
+  }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export default function ResultTable() {
   return (
     <Grid item xs={12} display={"flex"} justifyContent={"center"} style={{ marginTop: "20px" }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell>Ingredient</TableCell>
               <TableCell align="right">Calories</TableCell>
               <TableCell align="right">Fat&nbsp;(g)</TableCell>
               <TableCell align="right">Carbs&nbsp;(g)</TableCell>
               <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="right">Allergens</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
+            {imageResult.재료.map(ingredient => (
               <TableRow
-                key={row.name}
+                key={ingredient.이름}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {ingredient.이름}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{ingredient?.칼로리}</TableCell>
+                <TableCell align="right">{ingredient?.영양분.지방}</TableCell>
+                <TableCell align="right">{ingredient?.영양분.탄수화물}</TableCell>
+                <TableCell align="right">{ingredient?.영양분.단백질}</TableCell>
+                <TableCell align="right">{Array.isArray(ingredient?.알러지성분) ? ingredient.알러지성분.join(", ") : ""}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-
     </Grid>
   );
 }
+
+ResultTable.propTypes = {
+  imageResult: PropTypes.shape({
+    음식이름: PropTypes.string.isRequired,
+    총칼로리: PropTypes.number.isRequired,
+    재료: PropTypes.arrayOf(
+      PropTypes.shape({
+        이름: PropTypes.string.isRequired,
+        영양분: PropTypes.shape({
+          탄수화물: PropTypes.string.isRequired,
+          단백질: PropTypes.string.isRequired,
+          지방: PropTypes.string.isRequired,
+        }).isRequired,
+        칼로리: PropTypes.number.isRequired,
+        알러지성분: PropTypes.arrayOf(PropTypes.string),
+      }),
+    ).isRequired,
+  }).isRequired,
+};
