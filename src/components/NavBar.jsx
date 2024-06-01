@@ -59,7 +59,7 @@ export default function NavBar() {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenAtom);
   const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     // 컴포넌트가 마운트될 때 리프레시 토큰 요청
     const fetchAccessToken = async () => {
       try {
@@ -73,7 +73,7 @@ export default function NavBar() {
     if (!accessToken && cookies.refreshToken) {
       fetchAccessToken();
     }
-  }, [accessToken, cookies.refreshToken, setAccessToken]);
+  }, [accessToken, cookies.refreshToken, setAccessToken]); */
 
   const handleClickLogin = () => {
     if (accessToken) {
