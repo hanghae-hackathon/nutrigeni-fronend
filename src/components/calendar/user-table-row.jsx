@@ -2,28 +2,32 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import Stack from "@mui/material/Stack";
-import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
 import TableRow from "@mui/material/TableRow";
 import MenuItem from "@mui/material/MenuItem";
 import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { selecetFoodAtom } from "../../atom/selecetFoodAtom";
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
-  name,
-  avatarUrl,
-  company,
-  role,
-  isVerified,
-  status,
-}) {
+export default function UserTableRow(props) {
   const [open, setOpen] = useState(null);
+  const [selectFood, setSelcetFood] = useRecoilState(selecetFoodAtom)
+  const navigate = useNavigate();
+
 
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
+  const handleClickButton = () => {
+    setSelcetFood(props.row)
+    navigate("/exercise")
+  }
 
   return (
     <>
@@ -31,22 +35,21 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {props.row.createDate}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{props.row.id}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{props.row.foodName}</TableCell>
 
-        <TableCell align="center">{isVerified ? "Yes" : "No"}</TableCell>
-
+        <TableCell>{props.row.totalCalories} Kcal</TableCell>
         <TableCell>
-          <TableCell>{status}</TableCell>
+          <Button onClick={handleClickButton}>자세히</Button>
         </TableCell>
+
       </TableRow>
 
       <Popover
@@ -82,4 +85,5 @@ UserTableRow.propTypes = {
   role: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
+  row: PropTypes.any,
 };

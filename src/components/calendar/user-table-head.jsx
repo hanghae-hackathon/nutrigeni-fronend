@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
-import Checkbox from "@mui/material/Checkbox";
 import TableHead from "@mui/material/TableHead";
 import TableCell from "@mui/material/TableCell";
 import TableSortLabel from "@mui/material/TableSortLabel";
@@ -12,11 +11,8 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 export default function UserTableHead({
   order,
   orderBy,
-  rowCount,
   headLabel,
-  numSelected,
   onRequestSort,
-  onSelectAllClick,
 }) {
   const onSort = (property) => (event) => {
     onRequestSort(event, property);
@@ -25,7 +21,6 @@ export default function UserTableHead({
   return (
     <TableHead>
       <TableRow>
-
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -37,7 +32,6 @@ export default function UserTableHead({
               hideSortIcon
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
-              onClick={onSort(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (

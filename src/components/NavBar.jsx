@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "antd";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
 import { accessTokenAtom, userInfoAtom } from "../atom/loginAtom";
-import { logoutAPI, silentRefresh } from "../api/loginAPI";
+import { logoutAPI } from "../api/loginAPI";
+import Logo from "../images/Logo.png"
 
 const Nav = styled.nav`
   padding: 0 20px;
@@ -26,7 +27,14 @@ const LogoContainer = styled.div`
     font-size: 20px;
     padding: 19px 20px;
   }
+
+  img {
+    width: 60px;
+    margin-top: -20px; /* Adjust the value to cut the top */
+    margin-bottom: -20px; /* Adjust the value to cut the bottom */
+  }
 `;
+
 
 const SubContainer = styled.div`
   width: 100%;
@@ -100,13 +108,15 @@ export default function NavBar() {
   return (
     <Nav>
       <LogoContainer>
-        <a href="">Logo</a>
+        <a href="">
+          <img src={Logo} alt="Logo" style={{ width: "60px" }} />
+        </a>
       </LogoContainer>
       <SubContainer>
         <ItemContainer>
-          <a href="/calendar">지난 식단</a>
           <Link to="/">홈</Link>
           <Link to="/image_analysis">식단 기록하기</Link>
+          <Link to="/calendar">지난 식단</Link>
           <Link to="/profile">프로필</Link>
         </ItemContainer>
         <ButtonContainer>

@@ -1,6 +1,7 @@
 import Layout from "./components/Layout";
 import PrivateRoute from "./components/PrivateRoute";
 import CalendarPage from "./pages/CalendarPage";
+import ExercisePage from "./pages/ExercisePage";
 import FoodAnalysisPage from "./pages/FoodAnalysisPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -46,6 +47,10 @@ const routes = [
       {
         path: "/register",
         element: <RegisterPage />,
+      },
+      {
+        path: "/exercise",
+        element: <ExercisePage />,
       },
     ],
   },

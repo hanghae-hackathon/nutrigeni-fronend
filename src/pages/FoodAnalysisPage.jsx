@@ -2,6 +2,7 @@ import { Grid, Stack, Typography } from "@mui/material";
 import FileUpload from "../components/foodAnalysis/FileUpload";
 import ResultTable from "../components/foodAnalysis/ResultTable";
 import { useEffect, useState } from "react";
+import FoodEvaluation from "../components/foodAnalysis/FoodEvaluation";
 
 export default function FoodAnalysisPage() {
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,7 @@ export default function FoodAnalysisPage() {
       </Grid>
       <FileUpload loading={loading} setLoading={setLoading} setImageResult={setImageResult} />
       <ResultTable imageResult={imageResult} />
+      <FoodEvaluation/>
     </Grid>
   );
 }
