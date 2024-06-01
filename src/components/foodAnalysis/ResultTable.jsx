@@ -5,7 +5,7 @@ import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 export default function ResultTable({ imageResult }) {
   // Check if imageResult and imageResult.재료 exist
   if (!imageResult || !imageResult.재료) {
-    return <div>No data available</div>;
+    return <div></div>;
   }
 
   return (
