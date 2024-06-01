@@ -56,33 +56,33 @@ const ImageIconButton = styled(ButtonBase)(({ theme }) => ({
 
 const images = [
   {
-    url: "https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=400",
-    title: "name1",
+    url: "/images/image1.jpg",
+    title: "건강한 식습관",
     width: "40%",
   },
   {
-    url: "https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=400",
-    title: "name2",
+    url: "/images/image2.jpg",
+    title: "개인 맞춤형",
     width: "20%",
   },
   {
-    url: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400",
-    title: "name3",
+    url: "/images/image3.jpg",
+    title: "질병 예방",
     width: "40%",
   },
   {
-    url: "https://images.unsplash.com/photo-1453747063559-36695c8771bd?auto=format&fit=crop&w=400",
-    title: "name4",
+    url: "/images/image4.jpg",
+    title: "영양 관리",
     width: "38%",
   },
   {
-    url: "https://images.unsplash.com/photo-1523309996740-d5315f9cc28b?auto=format&fit=crop&w=400",
-    title: "name5",
+    url: "/images/image5.jpg",
+    title: "자기 건강 관리",
     width: "38%",
   },
   {
-    url: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400",
-    title: "name6",
+    url: "/images/image6.jpg",
+    title: "헬스케어",
     width: "24%",
   },
 ];
@@ -91,7 +91,7 @@ export default function ProductCategories() {
   return (
     <Container component="section" sx={{ mt: 8, mb: 4 }}>
       <Typography variant="h4" marked="center" align="center" component="h2">
-        For all tastes and all desires
+        나에게 맞는 식사를 위한 솔루션 서비스
       </Typography>
       <Box sx={{ mt: 8, display: "flex", flexWrap: "wrap" }}>
         {images.map((image) => (

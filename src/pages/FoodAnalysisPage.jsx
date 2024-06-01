@@ -1,8 +1,14 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import FileUpload from "../components/foodAnalysis/FileUpload";
 import ResultTable from "../components/foodAnalysis/ResultTable";
+import { useEffect, useState } from "react";
 
 export default function FoodAnalysisPage() {
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    console.log(loading)
+  }, [loading])
   return (
     <Grid item>
       <Grid item xs={12} display={"flex"} justifyContent={"center"} style={{ borderBottom: "2px solid #cfcfcf", paddingBottom: "20px" }}>
@@ -16,7 +22,7 @@ export default function FoodAnalysisPage() {
           </Stack>
         </Grid>
       </Grid>
-      <FileUpload />
+      <FileUpload loading={loading} setLoading={setLoading} />
       <ResultTable />
     </Grid>
   );

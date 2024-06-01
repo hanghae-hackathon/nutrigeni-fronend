@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import uploadImage from "../../images/upload.png";
 import APIs from "../../controller/APIs";
 import axios from "axios";
+import PropTypes from "prop-types";
 
-export default function FileUpload() {
+export default function FileUpload(props) {
+  const { setLoading } = props
   const [uploadedFile, setUploadedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const fileInputRef = useRef(null);
@@ -23,15 +25,16 @@ export default function FileUpload() {
       formData.append("file", file)
 
       try {
+        setLoading(true)
         const response = await axios.post("http://192.168.0.193:8081/api/image-upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         })
+        setLoading(false)
         console.log(response)
-        // setMessage(response.data);
       } catch (error) {
-        // setMessage("File upload failed!");
+        setLoading(false)
       }
     }
   };
@@ -78,3 +81,8 @@ export default function FileUpload() {
     </>
   );
 }
+
+FileUpload.propTypes = {
+  loading: PropTypes.object.isRequired,
+  setLoading: PropTypes.func.isRequired,
+};
